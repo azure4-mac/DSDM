@@ -14,3 +14,23 @@ void main() {
   };
   print(aluno);
 }
+
+void main() {
+  Map<String, Set<String>> abc = {
+    "3F":{"João","Maria", "José"},
+    "2F":{"Pedro","José","Ana"}
+  };
+}
+
+void main() {
+  for (int i = 0; i <= 20; i++) {
+    if (i % 2 == 0) print(i);
+  }
+}
+
+void main() {
+  List<String> nomes = ["João", "Maria", "josé"];
+  for (String nome in nomes) {
+    print(nome);
+  }
+}
