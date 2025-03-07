@@ -34,3 +34,21 @@ void main() {
     print(nome);
   }
 }
+
+import 'dart:io';
+
+void main() {
+  print("Qual a sua idade?");
+  String? input = stdin.readLineSync();
+  print("Sua idade é $input.");
+}
+
+void main() {
+  String numeros(int numero){
+    List<String> unidades = ["um", "tres", "", "cinco", "sete", "nove"];
+    List<String> especiais = ["onze", "treze", "quinze", "dezesete", "dezenavo"];
+    List<String> dezena = ["dez", "vinte", "trinta", "quarenta", "cinquenta", "sessenta", "setenta", "ointenta", "noventa"];
+    }
+
+  if (numero == 100) return cento;
+}
