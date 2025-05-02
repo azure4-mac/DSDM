@@ -1,0 +1,131 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MaterialApp(debugShowCheckedModeBanner: false, home: TelaInicial()));
+}
+
+class TelaInicial extends StatefulWidget {
+  @override
+  State<TelaInicial> createState() => _TelaInicialState();
+}
+
+class _TelaInicialState extends State<TelaInicial> {
+  List<Tarefas> tarefas = [
+    Tarefas("Bruno ficou desesperado"),
+    Tarefas("Jailson falou relaxa"),
+    Tarefas("Os dois zeraram a prova")
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          actions: [
+            IconButton(onPressed: () {}, icon: Icon(Icons.ac_unit_outlined))
+          ],
+          backgroundColor: Colors.blueAccent,
+          title: Center(
+              child: Text("Terefas", style: TextStyle(color: Colors.black))),
+        ),
+        body: ListView.builder(
+            itemCount: tarefas.length,
+            itemBuilder: (context, index) {
+              return Card(
+                child: ListTile(
+                  leading: Checkbox(
+                    value: tarefas[index].concluida,
+                    onChanged: (bool? value) {
+                      setState(() {
+                        tarefas[index].concluida = value!;
+                      });
+                    },
+                  ),
+                  title: Text(
+                    tarefas[index].nome,
+                    style: TextStyle(
+                        decoration: tarefas[index].concluida
+                            ? TextDecoration.lineThrough
+                            : TextDecoration.none),
+                  ),
+                  trailing: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        tarefas.removeAt(index);
+                      });
+                    },
+                    icon: Icon(
+                      Icons.delete,
+                    ),
+                    color: Colors.white,
+                  ),
+                ),
+                color: tarefas[index].concluida
+                    ? Color.fromARGB(150, 110, 255, 130)
+                    : Color.fromARGB(150, 255, 80, 80),
+              );
+            }),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(context,
+                    MaterialPageRoute(builder: ((context) => ColocarTarefas())))
+                .then((t) {
+              setState(() {
+                tarefas.add(t);
+              });
+            });
+          },
+          child: Icon(Icons.add),
+        ));
+  }
+}
+
+class ColocarTarefas extends StatelessWidget {
+  final TextEditingController _controllernomedatarefa = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        actions: [
+          IconButton(onPressed: () {}, icon: Icon(Icons.ac_unit_outlined))
+        ],
+        backgroundColor: Colors.grey,
+        title: Center(
+            child:
+                Text("Cadastro Tarefa", style: TextStyle(color: Colors.black))),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextField(
+                controller: _controllernomedatarefa,
+                decoration: InputDecoration(labelText: "Nome Da Tarefa")),
+            Row(
+              children: [
+                ElevatedButton(
+                    onPressed: (() {
+                      if (_controllernomedatarefa.text != "") {
+                        Tarefas t = Tarefas(
+                          _controllernomedatarefa.text,
+                        );
+                        Navigator.pop(context, t);
+                      }
+                    }),
+                    child: Text("Salvar"))
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class Tarefas {
+  String nome;
+  bool concluida;
+
+  Tarefas(this.nome, {this.concluida = false});
+}
