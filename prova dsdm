@@ -1,3 +1,4 @@
+import 'dart:html';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,6 +17,7 @@ class _TelaInicialState extends State<TelaInicial> {
     Tarefas("Os dois zeraram a prova")
   ];
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,52 +32,47 @@ class _TelaInicialState extends State<TelaInicial> {
         body: ListView.builder(
             itemCount: tarefas.length,
             itemBuilder: (context, index) {
-              return Card(
-                child: ListTile(
-                  leading: Checkbox(
-                    value: tarefas[index].concluida,
-                    onChanged: (bool? value) {
-                      setState(() {
-                        tarefas[index].concluida = value!;
-                      });
-                    },
-                  ),
-                  title: Text(
-                    tarefas[index].nome,
-                    style: TextStyle(
-                        decoration: tarefas[index].concluida
-                            ? TextDecoration.lineThrough
-                            : TextDecoration.none),
-                  ),
-                  trailing: IconButton(
-                    onPressed: () {
-                      setState(() {
-                        tarefas.removeAt(index);
-                      });
-                    },
-                    icon: Icon(
-                      Icons.delete,
-                    ),
-                    color: Colors.white,
-                  ),
-                ),
-                color: tarefas[index].concluida
-                    ? Color.fromARGB(150, 110, 255, 130)
-                    : Color.fromARGB(150, 255, 80, 80),
-              );
+          return Card(
+            child: ListTile(
+              leading: Checkbox(
+                value: tarefas[index].concluida,
+                onChanged: (bool? value) {
+                  setState(() {
+                    tarefas[index].concluida = value!;
+                  });
+                },
+              ),
+              title: Text(
+                tarefas[index].nome,
+                style: TextStyle(
+                    decoration: tarefas[index].concluida
+                        ? TextDecoration.lineThrough
+                        : TextDecoration.none),
+              ),
+              trailing: IconButton(
+                onPressed: () {
+                  setState(() {
+                    tarefas.removeAt(index);
+                  });
+                },
+                icon: Icon(Icons.delete, ),
+                color: Colors.white,
+              ),
+            ),color: tarefas[index].concluida ? Color.fromARGB(150, 110, 255, 130) : Color.fromARGB(150, 255, 80, 80),
+          );
             }),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.push(context,
-                    MaterialPageRoute(builder: ((context) => ColocarTarefas())))
-                .then((t) {
-              setState(() {
-                tarefas.add(t);
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: ((context) => ColocarTarefas()))).then((t) {
+                setState(() {
+                  tarefas.add(t);
+                });
               });
-            });
-          },
-          child: Icon(Icons.add),
-        ));
+            },
+            child: Icon(Icons.add),));
   }
 }
 
